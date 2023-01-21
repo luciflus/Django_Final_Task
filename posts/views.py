@@ -16,7 +16,7 @@ from .serializers import PostSerializer, CommentSerializer
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    authentication_classes = [authentication.BasicAuthentication, authentication.TokenAuthentication]
+    authentication_classes = [authentication.TokenAuthentication]
     def perform_create(self, serializer):
         serializer.save(author=self.request.user.author)
     def perform_update(self, serializer):
