@@ -31,6 +31,7 @@ acc_router.register('register', acc_view.AuthorViewSet)
 
 posts_router = DefaultRouter()
 posts_router.register('posts', posts_view.PostViewSet)
+posts_router.register('marks', posts_view.MarkViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
