@@ -23,3 +23,14 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user.author)
     def perform_destroy(self, serializer):
         serializer.save(author=self.request.user.author)
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorPermission]
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user.author)
+    def perform_update(self, serializer):
+        serializer.save(author=self.request.user.author)
+    def perform_destroy(self, serializer):
+        serializer.save(author=self.request.user.author)

@@ -9,7 +9,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.text} - {self.author.name}'
+        return f'{self.text} - {self.created_at} - {self.author}'
 
 class Comment(models.Model):
     text = models.CharField(max_length=255)
@@ -18,5 +18,5 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.text} - {self.author.name} - {self.author.post}'
+        return f'{self.text} - {self.created_at} - {self.author}'
 

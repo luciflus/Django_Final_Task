@@ -32,7 +32,7 @@ acc_router.register('register', acc_view.AuthorViewSet)
 
 posts_router = DefaultRouter()
 posts_router.register('posts', posts_view.PostViewSet)
-
+posts_router.register('comments', posts_view.CommentViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
