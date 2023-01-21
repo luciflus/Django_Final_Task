@@ -10,8 +10,8 @@ from rest_framework import authentication, permissions
 from .permissions import IsAuthorPermission, IsStaffPermission
 from rest_framework import permissions
 
-from .models import Comment, Post
-from .serializers import PostSerializer, CommentSerializer
+from .models import Comment, Post, Mark
+from .serializers import PostSerializer, CommentSerializer, MarkSerializer
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -40,3 +40,15 @@ class CommentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     def perform_destroy(self, serializer):
         serializer.save(author=self.request.user.author)
 
+class MarkViewSet(viewsets.ModelViewSet):
+    queryset = Mark.objects.all()
+    serializer_class = MarkSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorPermission]
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user.author)
+
+    def perform_update(self, serializer):
+        serializer.save(author=self.request.user.author)
+
+    def perform_destroy(self, serializer):
+        serializer.save(author=self.request.user.author)
