@@ -7,7 +7,7 @@ from rest_framework import views, status
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
 from rest_framework import authentication, permissions
-from .permissions import IsStaffandAuthorPermission
+from .permissions import IsAuthorPermission, IsStaffPermission
 from rest_framework import permissions
 
 from .models import Comment, Post
@@ -16,7 +16,7 @@ from .serializers import PostSerializer, CommentSerializer
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorPermission]
     def perform_create(self, serializer):
         serializer.save(author=self.request.user.author)
     def perform_update(self, serializer):

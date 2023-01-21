@@ -53,7 +53,7 @@ urlpatterns = [
     path('api/account/token', obtain_auth_token),
     path('api/auth/', include('rest_framework.urls')),
 
-    path('api/posts/', include(posts_router.urls)),
+    path('api/', include(posts_router.urls)),
 
 # documentation
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger_doc'),
