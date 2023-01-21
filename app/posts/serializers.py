@@ -10,6 +10,10 @@ class PostSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['author']
 
+    avg_mark = serializers.SerializerMethodField()
+    def get_avg_mark(self, obj):
+        return obj.marks.all().aggregate(Avg('mark_value'))
+
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,8 +25,5 @@ class MarkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mark
         fields = '__all__'
-        read_only_fields = ['author']
+        read_only_fields = ['author', ]
 
-    avg_mark = serializers.SerializerMethodField()
-    def get_avg_mark(self, obj):
-        return Mark.objects.all().aggregate(Avg('mark_value'))
