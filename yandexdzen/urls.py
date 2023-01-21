@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
-from django.views.generic import TemplateView
 from rest_framework import permissions
 
 
@@ -32,7 +31,6 @@ acc_router.register('register', acc_view.AuthorViewSet)
 
 posts_router = DefaultRouter()
 posts_router.register('posts', posts_view.PostViewSet)
-posts_router.register('comments', posts_view.CommentViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -54,6 +52,8 @@ urlpatterns = [
     path('api/auth/', include('rest_framework.urls')),
 
     path('api/', include(posts_router.urls)),
+    path('api/comments/', posts_view.CommentListCreateAPIView.as_view()),
+    path('api/comments/<int:pk>/', posts_view.CommentRetrieveUpdateDestroyAPIView.as_view()),
 
 # documentation
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger_doc'),

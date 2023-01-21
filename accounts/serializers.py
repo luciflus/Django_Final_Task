@@ -9,9 +9,9 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Author
-        #fields = '__all__'
-        exclude = ['user', ]
-        #read_only_fields = ['username']
+        fields = '__all__'
+        #exclude = ['user', ]
+        read_only_fields = ['is_author', 'user']
 
     def validate(self, data):
         if data['password'] != data['password_2']:
@@ -27,6 +27,7 @@ class AuthorSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(f'Не удалось создать пользователя. {e}')
         else:
             author = Author.objects.create(
+                is_staff=validated_data['is_staff'],
                 username=validated_data['username'],
                 telegram_chat_id=validated_data['telegram_chat_id'],
                 email=validated_data['email'],
