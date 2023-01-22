@@ -19,6 +19,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+BOT_TOKEN = os.environ.get('SECRET_BOT')
+BOT_URL = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'
+BOT_CHAT_ID = os.environ.get('CHAT_ID')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -27,6 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get('DEBUG', default=0))
+
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 

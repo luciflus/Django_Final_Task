@@ -7,6 +7,8 @@ from rest_framework import views, status
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
 from rest_framework import authentication, permissions
+from yandexdzen import settings
+from yandexdzen.settings import BOT_URL, BOT_TOKEN, BOT_CHAT_ID
 from .permissions import IsAuthorPermission, IsStaffPermission
 from rest_framework import permissions
 
