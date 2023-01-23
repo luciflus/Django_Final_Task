@@ -1,7 +1,8 @@
 from rest_framework import serializers
-
 from .models import Post, Comment, Mark
 from django.db.models import Avg
+from .bot import bot
+
 from accounts.models import Author
 
 class PostSerializer(serializers.ModelSerializer):
@@ -13,6 +14,18 @@ class PostSerializer(serializers.ModelSerializer):
     avg_mark = serializers.SerializerMethodField()
     def get_avg_mark(self, obj):
         return obj.marks.all().aggregate(Avg('mark_value'))
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        chat_id = user.author.telegram_chat_id
+        from django.db import IntegrityError
+        try:
+            message = Post.objects.create(**validated_data)
+            message.save(
+                bot.send_message(chat_id, 'successfully registered')
+            )
+        except IntegrityError:
+            return message
 
 
 class CommentSerializer(serializers.ModelSerializer):
